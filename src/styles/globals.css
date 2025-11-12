@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+* {
+    font-variation-settings: "opsz" 36;
+}
