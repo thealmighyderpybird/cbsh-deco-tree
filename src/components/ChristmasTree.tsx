@@ -6,47 +6,49 @@ import tealTree from "./tree/4.png";
 import blueTree from "./tree/5.png";
 import purpleTree from "./tree/6.png";
 import rainbowTree from "./tree/7.png";
+import Image from "next/image";
 
 type TreeInfo = {
     name: string,
     src: string,
 }
 
-export const treeList: Record<string, TreeInfo> = {
-    red: {
+export const treeList: TreeInfo[] = [
+    {
         name: "Red Tree",
         src: redTree.src,
     },
-    yellow: {
+    {
         name: "Yellow Tree",
         src: yellowTree.src,
     },
-    lightGreen: {
+    {
         name: "Light Green Tree",
         src: lightGreenTree.src,
     },
-    green: {
+    {
         name: "Green Tree",
         src: greenTree.src,
     },
-    teal: {
+    {
         name: "Teal Tree",
         src: tealTree.src,
     },
-    blue: {
+    {
         name: "Blue Tree",
         src: blueTree.src,
     },
-    purple: {
+    {
         name: "Purple Tree",
         src: purpleTree.src,
     },
-    rainbow: {
+    {
         name: "Rainbow Tree",
         src: rainbowTree.src,
     }
-};
+];
 
-export default function ChristmasTree({ type }: { type: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 }) {
-
+export default function ChristmasTree({ type, scale = 1 }: { type: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7, scale?: number }) {
+    return <Image src={treeList[type]!.src} alt={treeList[type]!.name} width={285 * scale} height={371 * scale}
+                  draggable={false} className="select-none" />
 };

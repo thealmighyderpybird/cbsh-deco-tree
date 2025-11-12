@@ -1,5 +1,7 @@
-import Link from "next/link";
 import CroomsBellScheduleLogo from "~/components/CBSHLogo";
+import ChristmasTree from "~/components/ChristmasTree";
+import ChristmasTop from "~/components/ChristmasTop";
+import Link from "next/link";
 
 export default function HomePage() {
     return <main className="flex min-h-screen flex-col items-center justify-center">
@@ -8,7 +10,11 @@ export default function HomePage() {
                 <CroomsBellScheduleLogo size={48} />
                 <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">Deco My Tree</h1>
             </header>
-            <section>
+            <section className="mt-10">
+                <div className="absolute left-1/2" style={{ transform: "translate(-50%, -75%)" }}>
+                    <ChristmasTop type={1} />
+                </div>
+                <ChristmasTree type={3} />
 
             </section>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
