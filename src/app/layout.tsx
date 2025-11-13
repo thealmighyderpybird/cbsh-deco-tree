@@ -7,9 +7,9 @@ import fonts from "~/styles/fonts";
 
 export const viewport: Viewport = {
     width: "device-width",
-    initialScale: 1,
     minimumScale: 0.5,
     maximumScale: 2,
+    initialScale: 1,
 };
 
 export const metadata: Metadata = {
