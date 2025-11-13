@@ -1,8 +1,16 @@
+import { AlertProvider } from "~/AlertContext";
 import "~/styles/globals.css";
 
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import fonts from "~/styles/fonts";
+
+export const viewport: Viewport = {
+    width: "device-width",
+    initialScale: 1,
+    minimumScale: 0.5,
+    maximumScale: 2,
+};
 
 export const metadata: Metadata = {
   title: {
@@ -14,7 +22,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-    return <html lang="en" className={ fonts.Torus.className + " min-h-screen bg-gradient-to-r text-white from-[#b50f0f] to-[#f28b15]" }>
-        <body>{ children }</body>
+    return <html lang="en" className="min-h-screen bg-gradient-to-r text-white from-[#b50f0f] to-[#f28b15]">
+        <body className={ fonts.Torus.className + " select-none" }>
+            <AlertProvider>{ children }</AlertProvider></body>
     </html>;
 }

@@ -7,7 +7,7 @@ export default function CroomsBellScheduleLogo(props: { size: 32 | 48 | 56 | 64 
     return <div style={{ userSelect: "none", display: "flex", gap: "0.25rem", justifyContent: "start",
                          flexFlow: "row nowrap", alignItems: "center" }}>
         <Image src={`/logo/${props.size}.png`} alt="Crooms Bell Schedule Logo" width={props.size} height={props.size}
-               draggable="false" />
+               draggable="false" priority />
         <span style={{ fontSize: `${props.size * 0.5625}px`, lineHeight: "1rem", fontWeight: 900, letterSpacing: "0" }}
               className={ fonts.SegoeUI.className }>Crooms Bell Schedule</span>
     </div>;

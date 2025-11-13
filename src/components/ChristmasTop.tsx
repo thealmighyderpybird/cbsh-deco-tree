@@ -3,7 +3,6 @@ import starTop from "./top/1.png";
 import diamond from "./top/2.png";
 import planet from "./top/3.png";
 import heart from "./top/4.png";
-import Image from "next/image";
 
 type TopInfo = {
     name: string,
@@ -34,6 +33,6 @@ export const topperList: TopInfo[] = [
 ];
 
 export default function ChristmasTop({ type, scale = 1 }: { type: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7, scale?: number }) {
-    return <Image src={topperList[type]!.src} alt={topperList[type]!.name} width={50 * scale} height={50 * scale}
-                  draggable={false} className="select-none" />
+    return <img src={topperList[type]!.src} alt={topperList[type]!.name} width={50 * scale} height={50 * scale}
+                draggable="false" className="select-none" />
 };

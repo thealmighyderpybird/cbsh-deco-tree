@@ -15,18 +15,14 @@ export default function HomePage() {
                     <ChristmasTop type={1} />
                 </div>
                 <ChristmasTree type={3} />
-
             </section>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
+            <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
                 <Link
                     className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-                    href="https://create.t3.gg/en/usage/first-steps"
-                    target="_blank"
-                >
-                    <h3 className="text-2xl font-bold">First Steps →</h3>
+                    href="/dashboard">
+                    <h3 className="text-2xl font-bold">Create Your Tree →</h3>
                     <div className="text-lg">
-                        Just the basics - Everything you need to know to set up your
-                        database and authentication.
+                        { "Create your tree so others can decorate your tree and write messages." }
                     </div>
                 </Link>
                 <Link
@@ -34,13 +30,19 @@ export default function HomePage() {
                     href="https://create.t3.gg/en/introduction"
                     target="_blank"
                 >
-                    <h3 className="text-2xl font-bold">Documentation →</h3>
+                    <h3 className="text-2xl font-bold">View Another Tree →</h3>
                     <div className="text-lg">
-                        Learn more about Create T3 App, the libraries it uses, and how to
-                        deploy it.
+                        View someone else's tree, decorate and add a message for a friend.
                     </div>
                 </Link>
-            </div>
+            </section>
+            <footer className="flex flex-col text-center text-sm select-none sm:flex-row sm:gap-4">
+                <Link href="https://croomssched.tech/terms" target="CBSH_TERMS" tabIndex={1}
+                      className="underline hover:no-underline">Terms of Service</Link>
+                <Link href="https://croomssched.tech/privacy" target="CBSH_PRIVACY" tabIndex={1}
+                      className="underline hover:no-underline">Privacy Policy</Link>
+                <span>&copy; Crooms Bell Schedule 2025</span>
+            </footer>
         </div>
     </main>;
 }
