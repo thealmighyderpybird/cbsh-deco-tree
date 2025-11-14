@@ -6,7 +6,7 @@ interface TreeAPIResponse {
 }
 
 export type TreeInfo = {
-    details: { tree: number, topper: number },
+    details: { tree: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7, topper: 0 | 1 | 2 | 3 | 4 },
     ornaments: string[],
     uid: string,
 };

@@ -15,7 +15,7 @@ export default async function Layout({ children, params }: { children: ReactNode
     const displayName = (res.data.displayname !== "") ? res.data.displayname : user;
 
     return <div className="m-auto p-10 max-w-196">
-        <h2 className="my-20 text-center text-3xl sm:text-4xl md:text-5xl font-bold select-none">{ displayName }'s Tree</h2>
+        <h2 className="mt-15 mb-25 text-center text-4xl md:text-5xl font-bold select-none">{ displayName }'s Tree</h2>
         { children }
     </div>
 };

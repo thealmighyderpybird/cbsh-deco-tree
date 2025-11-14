@@ -16,16 +16,16 @@ export default async function HomePage() {
             </header>
             <section className="mt-10">
                 <div className="absolute left-1/2" style={{ transform: "translate(-50%, -75%)" }}>
-                    <ChristmasTop type={1} />
+                    <ChristmasTop type={treeInfo?.details ? treeInfo.details.topper : 1} />
                 </div>
-                <ChristmasTree type={3} />
+                <ChristmasTree type={treeInfo?.details ? treeInfo.details.tree : 3} />
             </section>
             <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
                 <Link
                     className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
                     href="/dashboard">
                     <h3 className="text-2xl font-bold leading-none">
-                        { treeInfo?.details ? "Manage Your Tree →" : "Create Your Tree →" }</h3>
+                        { treeInfo?.details ? "View Your Tree →" : "Create Your Tree →" }</h3>
                     <div className="text-lg leading-5">
                         { treeInfo?.details ?
                             "View your tree and decorations your friends have added." :

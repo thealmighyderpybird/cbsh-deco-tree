@@ -2,11 +2,16 @@ import ChristmasTree from "~/components/ChristmasTree";
 import ChristmasTop from "~/components/ChristmasTop";
 import getUserInfo from "~/lib/getUserInfo";
 import TreeServerURL from "~/TreeServerURL";
+import getSession from "~/lib/getSession";
+import Client from "./client";
 import Link from "next/link";
 
 export default async function Page({ params }: { params: Promise<{ user: string }> }) {
     const { user } = await params;
     const userInfo = await getUserInfo(user);
+    const { sid } = await getSession();
+
+    const displayName = (userInfo.displayname !== "") ? userInfo.displayname : user;
 
     const r = await fetch(TreeServerURL + "/" + userInfo.id);
     const { status, data } = await r.json() as { status: "OK" | "FAILED", data: any };
@@ -23,12 +28,13 @@ export default async function Page({ params }: { params: Promise<{ user: string 
               href="/dashboard">Create your own tree</Link>
     </div>;
 
-    return <>
+    return <div className="flex flex-col justify-center gap-10">
         <div className="flex justify-center">
             <div className="absolute left-1/2" style={{ transform: "translate(-50%, -75%)" }}>
                 <ChristmasTop type={data.details.topper} scale={1} />
             </div>
             <ChristmasTree type={data.details.tree} scale={1} />
         </div>
-    </>
+        <Client sid={sid} displayName={displayName} treeInfo={data} />
+    </div>
 };
