@@ -6,5 +6,5 @@ export default async function DashboardLayout({ children }: { children: ReactNod
     const { uid } = await getSession();
     if (!uid) redirect("https://account.croomssched.tech/auth/login/sso/deco-my-tree");
 
-    return <div className="container">{ children }</div>
+    return <div className="container m-auto px-5 py-10">{ children }</div>;
 };
