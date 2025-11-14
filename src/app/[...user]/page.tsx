@@ -1,12 +1,14 @@
 import ChristmasTree from "~/components/ChristmasTree";
 import ChristmasTop from "~/components/ChristmasTop";
+import getUserInfo from "~/lib/getUserInfo";
 import TreeServerURL from "~/TreeServerURL";
 import Link from "next/link";
 
 export default async function Page({ params }: { params: Promise<{ user: string }> }) {
     const { user } = await params;
+    const userInfo = await getUserInfo(user);
 
-    const r = await fetch(TreeServerURL + "/" + user);
+    const r = await fetch(TreeServerURL + "/" + userInfo.id);
     const { status, data } = await r.json() as { status: "OK" | "FAILED", data: any };
 
     if (status !== "OK") return <div className="text-center">
@@ -24,9 +26,9 @@ export default async function Page({ params }: { params: Promise<{ user: string 
     return <>
         <div className="flex justify-center">
             <div className="absolute left-1/2" style={{ transform: "translate(-50%, -75%)" }}>
-                <ChristmasTop type={1} scale={1.25} />
+                <ChristmasTop type={data.details.topper} scale={1} />
             </div>
-            <ChristmasTree type={3} scale={1.25} />
+            <ChristmasTree type={data.details.tree} scale={1} />
         </div>
     </>
 };

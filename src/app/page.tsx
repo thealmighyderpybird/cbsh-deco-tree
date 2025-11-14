@@ -28,7 +28,7 @@ export default async function HomePage() {
                         { treeInfo?.details ? "Manage Your Tree →" : "Create Your Tree →" }</h3>
                     <div className="text-lg leading-5">
                         { treeInfo?.details ?
-                            "View your tree and the decorations your friends have added." :
+                            "View your tree and decorations your friends have added." :
                             "Create your tree so others can decorate it and write messages." }
                     </div>
                 </Link>
