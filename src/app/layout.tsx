@@ -24,6 +24,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
     return <html lang="en" className="min-h-screen bg-gradient-to-r text-white from-[#b50f0f] to-[#f28b15]">
         <body className={ fonts.Torus.className + " select-none" }>
-            <AlertProvider>{ children }</AlertProvider></body>
+            <AlertProvider>{ children }<div id="modal-portal" /></AlertProvider></body>
     </html>;
 }

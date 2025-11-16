@@ -1,0 +1,50 @@
+.liveEdit {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.liveEditor {
+    border-radius: 0.75rem;
+    user-select: none;
+    min-height: 100px;
+    resize: vertical;
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    width: 100%;
+}
+
+.optionBar {
+    justify-content: space-between;
+    margin-block-end: 0.25rem;
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    display: flex;
+}
+
+.optionBar > div {
+    flex-flow: row nowrap;
+    display: flex;
+}
+
+.icon {
+    box-sizing: content-box;
+    border-radius: 0.55rem;
+    padding: 0.325rem;
+    height: 1.25rem;
+    width: 1.25rem;
+    display: block;
+    fill: white;
+}
+
+.icon * {
+    display: block;
+}
+
+.icon:hover {
+    background-color: #fff3;
+}
+
+.icon:active, .icon.active {
+    background-color: #fff5;
+}
