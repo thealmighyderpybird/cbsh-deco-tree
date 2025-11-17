@@ -7,29 +7,26 @@ import { useState } from "react";
 import DialogCloseButton from "~/components/DialogCloseButton";
 
 export default function Client({ userData, displayName }: { userData: CBSHUser, displayName: string }) {
-    const [isDialogActive, setIsDialogActive] = useState(false);
+    const ud = userData?.displayname ? userData.displayname.trim() : (userData?.username ? String(userData.username).trim() : "");
+    const [page, setPage] = useState(0);
 
-    const ud = userData?.displayname ? userData.displayname : (userData?.username ? userData.username : "");
+    const pages = [<>
+        <h2 className="mt-15 mb-25 text-center text-3xl md:text-4xl font-bold select-none">Decorate { displayName }'
+            { !displayName.endsWith("s") && "s" } Tree</h2>
+    </>, <MessagePage displayName={displayName} userDisplay={ud} />];
 
-    return <div className="flex justify-center">
-        <button className="p-3 leading-none rounded-xl bg-orange-400 hover:opacity-90 active:opacity-70 w-fit min-w-32"
-               onClick={() => setIsDialogActive(true)}>Add a message</button>
-        { isDialogActive &&
-            createPortal(<MessageDialog displayName={displayName} setIsActive={setIsDialogActive} userDisplay={ud} />,
-                document.getElementById("modal-portal")!) }
-    </div>;
+    return pages[page];
 };
 
-const MessageDialog = ({ displayName, userDisplay, setIsActive }:
-                       { displayName: string, userDisplay: string, setIsActive: (value: boolean) => void }) => {
+const OrnamentPage = () => {
+
+};
+
+const MessagePage = ({ displayName, userDisplay }: { displayName: string, userDisplay: string }) => {
     const [message, setMessage] = useState("");
     const [name, setName] = useState(userDisplay);
     return <>
-        <div className="fixed inset-0 bg-black opacity-40" />
-        <div className={"fixed top-1/2 left-1/2 max-w-lg max-h-md bg-gradient-to-r from-[#b50f0fcc] to-[#f28b15cc]"+
-                        " p-5 w-full h-fit rounded-2xl flex flex-col items-center gap-4"}
-             style={{ transform: "translate(-50%, -50%)", boxShadow: "0 0 1rem black" }}>
-            <DialogCloseButton onClick={() => setIsActive(false)} />
+        <div>
             <h2 className="text-2xl leading-none text-center font-bold">Leave a message for { displayName }</h2>
             <div className="flex gap-1 w-full">
                 <label>Name: </label>
