@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, type CSSProperties } from "react";
 import sanitizeContent from "~/lib/SanitizeContent";
 import styles from "~/styles/liveEditor.module.css";
+import fonts from "~/styles/fonts";
 
 export default function LiveEdit({ value, onChange, style, preview = false }:
     { value?: string, onChange: (newContent: string) => void, style?: CSSProperties, preview?: boolean }
@@ -14,9 +15,8 @@ export default function LiveEdit({ value, onChange, style, preview = false }:
         underline: false,
         ul: false,
         ol: false,
-        a: false,
     });
-    const [html, setHtml] = useState(value ?? "");
+    const [html, setHtml] = useState(sanitizeContent(value ?? ""));
 
     // Start LiveEditor initialization
     useEffect(() => {
@@ -25,26 +25,26 @@ export default function LiveEdit({ value, onChange, style, preview = false }:
 
         doc.open();
         doc.write(`<!doctype html>
-            <html lang="en">
+            <html lang="en" class="${fonts.Torus.className}">
                 <head>
                     <style>
                         html {
-                            background-color: #222;
+                            background-color: #2225;
                             height: 100%;
                         }
                     
                         body {                  
                             --main: white;
+                            --accent-color: #af5d22;
                             --sucess: darkgreen;
                             --warn: goldenrod;
                             --alert: darkred;
                             --info: #0078D4;
                             --link: #af5d22;
                         
-                            --accent-color: #af5d22;
                             height: calc(100% - 1rem);
                             background: transparent;
-                            font: 11pt system-ui;       
+                            font: 11pt system-ui;
                             color-scheme: dark;
                             line-height: 1.3;
                             padding: 0.5rem;
@@ -84,7 +84,6 @@ export default function LiveEdit({ value, onChange, style, preview = false }:
                 underline: doc.queryCommandState("underline"),
                 ul: doc.queryCommandState("insertUnorderedList"),
                 ol: doc.queryCommandState("insertOrderedList"),
-                a: el?.tagName.toLowerCase() === "a" && el.getAttribute("target") === "CBSHTreeUserLink",
             });
         };
 
@@ -112,73 +111,6 @@ export default function LiveEdit({ value, onChange, style, preview = false }:
         if (doc) doc.execCommand(cmd, false, val ?? "");
     }
 
-    // For inserting links
-    function createLink() {
-        const doc = iframeRef.current?.contentDocument; if (!doc) return;
-        const sel = doc.getSelection(); if (!sel || sel.rangeCount === 0) return;
-
-        // If the cursor is already in a link
-        const el = sel.anchorNode?.parentElement;
-        if (el?.tagName.toLowerCase() === "a" && !el.hasAttribute("mention")) {
-            const currentUrl = el.getAttribute("href") ?? "";
-            const url = prompt("Edit URL:", currentUrl);
-            if (url) {
-                el.setAttribute("href", url);
-            }
-            const htmlContent = doc.body.innerHTML;
-            console.log(htmlContent);
-            setHtml(htmlContent);
-            return;
-        }
-
-        // Otherwise, create a new link
-        if (sel.rangeCount === 0) return;
-        const range = sel.getRangeAt(0);
-        const url = prompt("Enter a URL:"); if (!url) return;
-        const text = range.toString().trim() || url;
-
-        const a = doc.createElement("a");
-        a.href = url;
-        a.target = "CBSHTreeUserLink";
-        a.textContent = text;
-
-        range.deleteContents();
-        range.insertNode(a);
-
-        // Move the cursor after the link
-        const newRange = doc.createRange();
-        newRange.setStartAfter(a);
-        newRange.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(newRange);
-
-        // Update HTML content
-        const htmlContent = doc.body.innerHTML;
-        setHtml(htmlContent);
-    }
-
-    // For removing links
-    function removeLink() {
-        const doc = iframeRef.current?.contentDocument;
-        if (!doc) return;
-        const sel = doc.getSelection();
-        if (!sel) return;
-
-        const el = sel.anchorNode?.parentElement;
-        if (el?.tagName.toLowerCase() === "a" && !el.hasAttribute("mention")) {
-            // Replace the <a> with just its text
-            const text = doc.createTextNode(el.textContent || "");
-            el.replaceWith(text);
-
-            // Reset cursor after text
-            const range = doc.createRange();
-            range.setStartAfter(text);
-            range.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(range);
-        }
-    }
-
     function clearFormatting() {
         const doc = iframeRef.current?.contentDocument;
         if (!doc) return;
@@ -186,12 +118,9 @@ export default function LiveEdit({ value, onChange, style, preview = false }:
         if (!sel || sel.rangeCount === 0) return;
         const range = sel.getRangeAt(0);
 
-
-
         if (formats.underline) execCmd("underline");
         if (formats.italic) execCmd("italic");
         if (formats.bold) execCmd("bold");
-        if (formats.a) removeLink();
 
         // Clone the contents of the selection
         const clonedContents = range.cloneContents();
@@ -229,7 +158,7 @@ export default function LiveEdit({ value, onChange, style, preview = false }:
         sel.addRange(range);
 
         // Sync state immediately
-        setHtml(doc.body.innerHTML);
+        setHtml(sanitizeContent(doc.body.innerHTML));
     }
 
     // Editor and toolbar
@@ -247,10 +176,6 @@ export default function LiveEdit({ value, onChange, style, preview = false }:
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" onClick={() => execCmd("underline")}
                      className={ styles.icon + isActive(formats.underline) }>
                     <path d="M8.5 4.75a.75.75 0 0 0-1.5 0V12a5 5 0 0 0 10 0V4.75a.75.75 0 0 0-1.5 0V12a3.5 3.5 0 1 1-7 0zM6.75 18.5a.75.75 0 0 0 0 1.5h10.5a.75.75 0 0 0 0-1.5z" />
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" onClick={() => createLink()}
-                     className={ styles.icon + isActive(formats.a) }>
-                    <path d="M9.25 7a.75.75 0 0 1 .11 1.492l-.11.008H7a3.5 3.5 0 0 0-.206 6.994L7 15.5h2.25a.75.75 0 0 1 .11 1.492L9.25 17H7a5 5 0 0 1-.25-9.994L7 7zM17 7a5 5 0 0 1 .25 9.994L17 17h-2.25a.75.75 0 0 1-.11-1.492l.11-.008H17a3.5 3.5 0 0 0 .206-6.994L17 8.5h-2.25a.75.75 0 0 1-.11-1.492L14.75 7zM7 11.25h10a.75.75 0 0 1 .102 1.493L17 12.75H7a.75.75 0 0 1-.102-1.493zh10z" />
                 </svg>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" onClick={() => execCmd("insertUnorderedList")}
                      className={ styles.icon + isActive(formats.ul) }>

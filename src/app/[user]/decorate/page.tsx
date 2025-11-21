@@ -10,5 +10,5 @@ export default async function DecoratePage({ params }: { params: Promise<{ user:
 
     const displayName = (userInfo.displayname !== "") ? userInfo.displayname.trim() : String(user).trim();
 
-    return <Client userData={await getSessionInfo(sid)} displayName={displayName} />;
+    return <Client userData={await getSessionInfo(sid)} displayName={displayName} treeId={userInfo.id} />;
 }

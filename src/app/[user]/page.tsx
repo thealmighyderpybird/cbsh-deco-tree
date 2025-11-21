@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: Promise<{ user: string 
         <div className="text-center">
             <h2 className="leading-none text-2xl">This user hasn't created their tree yet!</h2>
             <p className="leading-none mb-5">You can ask them to create their tree so you can share a message.</p>
-            <Link className="p-3 leading-none rounded-xl bg-orange-400 hover:opacity-90 active:opacity-70 inline-block"
+            <Link className="p-3 leading-none rounded-xl bg-orange-400 hover:opacity-90 active:opacity-70 inline-block transition-all"
                   href="/dashboard">Create your own tree</Link>
         </div>
     </>;
@@ -44,7 +44,7 @@ export default async function Page({ params }: { params: Promise<{ user: string 
                 <ChristmasTree type={data.details.tree} scale={1} />
             </div>
             <div className="flex flex-col gap-2">
-                <Link className="p-3 leading-none rounded-xl bg-orange-400 hover:opacity-90 active:opacity-70 w-fit min-w-32"
+                <Link className="p-3 leading-none rounded-xl bg-orange-400 hover:opacity-90 active:opacity-70 w-fit min-w-32 transition-all"
                       href={`/${user}/decorate`}>Decorate this Tree</Link>
                 <Link className="underline hover:no-underline" href="/dashboard">Create your own tree</Link>
             </div>
