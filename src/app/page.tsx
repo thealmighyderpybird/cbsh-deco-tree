@@ -21,9 +21,8 @@ export default async function HomePage() {
                 <ChristmasTree type={treeInfo?.details ? treeInfo.details.tree : 3} />
             </section>
             <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-                <Link
-                    className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-                    href="/dashboard">
+                <Link className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
+                      href="/dashboard">
                     <h3 className="text-2xl font-bold leading-none">
                         { treeInfo?.details ? "View Your Tree →" : "Create Your Tree →" }</h3>
                     <div className="text-lg leading-5">
@@ -32,11 +31,8 @@ export default async function HomePage() {
                             "Create your tree so others can decorate it and write messages." }
                     </div>
                 </Link>
-                <Link
-                    className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-                    href="https://create.t3.gg/en/introduction"
-                    target="_blank"
-                >
+                <Link className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
+                      href="">
                     <h3 className="text-2xl font-bold leading-none">View Another Tree →</h3>
                     <div className="text-lg leading-5">
                         View and decorate someone else's tree with a nice message.
